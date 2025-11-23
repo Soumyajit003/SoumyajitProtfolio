@@ -1,0 +1,17 @@
+[
+    {
+      "name": "Todo App",
+      "technologyuse": ["HTML", "CSS", "Javascript"],
+      "images": "/images/todo-app.png"
+    },
+    {
+      "name": "Food Ordering",
+      "technologyuse": ["React", "CSS", "Node", "Mongo"],
+      "images": "/images/food-ordering.png"
+    },
+    {
+      "name": "LMS website",
+      "technologyuse": ["React", "Tailwind", "Node", "Mongo"],
+      "images": "/images/lms-website.png"
+    }
+  ]
