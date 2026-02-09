@@ -39,8 +39,8 @@ const Hero = () => {
           initial={{ x: 100, opacity: 0 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className='w-full md:w-lg flex justify-center md:justify-end mt-8 md:mt-0'>
-          <img src={assets.my_photo_2} alt='' className='w-60 md:w-lg rounded-lg'/>
+          className='w-full md:w-lg flex justify-center mt-8 md:mt-0'>  {/*md:justify-end*/}
+          <img src={assets.my_photo_3} alt='' className='w-60 md:w-md rounded-lg'/>
         </motion.div>
       </Element>
     </>

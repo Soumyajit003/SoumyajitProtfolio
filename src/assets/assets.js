@@ -1,6 +1,7 @@
 import soumyajit_logo_light from './s_logo_light.png'
 import my_photo_1 from './my_photo1.png'
 import my_photo_2 from './my_photo2.png'
+import my_photo_3 from './my_photo3.png'
 import java from './java.png'
 import cpp from './cpp.png'
 import c from './c.png'
@@ -26,6 +27,7 @@ export const assets  = {
     soumyajit_logo_light,
     my_photo_1,
     my_photo_2,
+    my_photo_3,
     java,
     cpp,
     css,
