@@ -6,11 +6,11 @@ import { Element } from "react-scroll";
 
 
 const Projects = () => {
-
   const navigate = useNavigate();
+  const displayProjects = myProjects.slice(0, 3);
 
   return (
-    <Element name="projects" className=" md:mx-25 mx-10 border-b border-b-zinc-600 pb-10 cursor-default">
+    <Element name="projects" className="md:mx-25 mx-10 border-b border-b-zinc-600 pb-20 cursor-default">
       <motion.p
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -18,82 +18,83 @@ const Projects = () => {
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className="font-outfit text-3xl m-auto text-center mt-10 text-white"
       >
-        Projects
+        Featured Projects
       </motion.p>
+
       <motion.div
         variants={{
-          visible: { transition: { staggerChildren: 0.2 } }
+          visible: { transition: { staggerChildren: 0.1 } }
         }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.1 }}
-        className=" flex justify-around text-white/50 flex-wrap"
+        className="flex justify-center gap-8 flex-wrap mt-16"
       >
-        {[
-          {
-            title: "Todo APP",
-            description: "A simple Todo App to manage tasks efficiently.",
-            tech: ["HTML", "CSS", "JavaScript"]
-          },
-          {
-            title: "LMS Website",
-            description: "A Learning Management System built with MERN Stack.",
-            tech: ["React", "Tailwind", "Node", "Mongo"]
-          },
-          {
-            title: "Food Ordering",
-            description: "A Food Ordering App for seamless online orders.",
-            tech: ["React", "CSS", "Node", "Mongo"]
-          }
-        ].map((project) => (
+        {displayProjects.map((project) => (
           <motion.div
-            key={project.title}
+            key={project.name}
             variants={{
-              hidden: { opacity: 0, y: 30, scale: 0.9 },
-              visible: { opacity: 1, y: 0, scale: 1 }
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 }
             }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            whileHover={{ y: -10, scale: 1.02 }}
-            className="border-yellow-400 border md:w-xs w-xs m-10 text-center rounded md:pb-3 hover:bg-yellow-400 hover:text-zinc-800 transition-colors duration-300 z-0 flex md:flex-col justify-between group"
+            whileHover={{ y: -10 }}
+            className="relative group w-full md:w-[350px] bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-300 hover:border-yellow-400/30"
           >
-            <div className="relative md:mb-3">
-              {/* Image */}
-              <img src={assets.dummy} alt="" className="md:w-xs w-40" />
-
-              {/* Overlay div */}
-              <div className="absolute inset-0 bg-black/70 backdrop-blur-xs bg-opacity-75 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-sm p-2">
+            {/* Project Image Container */}
+            <div className="relative h-48 overflow-hidden">
+              <img
+                src={project.images[0]}
+                alt={project.name}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <p className="text-white text-xs font-outfit line-clamp-2">
                   {project.description}
                 </p>
               </div>
             </div>
 
-            <div className="md:mr-0 mr-2 md:ml-0 ml-1">
-              <p className="font-bebas md:text-6xl text-4xl">{project.title}</p>
-              <div>
-                <ul>
-                  {project.tech.map((t) => (
-                    <li key={t} className="mx-1 inline-block list-disc md:text-sm text-[13px]">
-                      {t}
-                    </li>
-                  ))}
-                </ul>
+            {/* Content */}
+            <div className="p-6">
+              <h3 className="font-bebas text-4xl text-white group-hover:text-yellow-400 transition-colors">
+                {project.name}
+              </h3>
+
+              {/* Tech Tags */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {project.technologyuse.slice(0, 3).map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-0.5 bg-white/5 border border-zinc-800 text-zinc-400 rounded-full text-[10px] font-medium group-hover:border-yellow-400/20 group-hover:text-yellow-400/80 transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
+                {project.technologyuse.length > 3 && (
+                  <span className="text-zinc-600 text-[10px] self-center">+{project.technologyuse.length - 3} more</span>
+                )}
               </div>
             </div>
+
+            {/* Subtle Glow Effect */}
+            <div className="absolute -inset-2 bg-yellow-400/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
           </motion.div>
         ))}
       </motion.div>
-      <div className="text-center">
+
+      <div className="text-center mt-16">
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          whileHover={{ scale: 1.1, backgroundColor: "#fff" }}
+          whileHover={{ scale: 1.05, }}
           whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
           onClick={() => navigate('/projects')}
-          className="bg-yellow-400 px-4 py-2 text-zinc-800 border-none rounded font-semibold outline-none cursor-pointer transition ease-out duration-200">
-          Show More
+          className="bg-yellow-400 px-8 py-3 text-zinc-800 rounded font-bold font-outfit flex items-center gap-2 mx-auto hover:bg-white transition-all duration-300"
+        >
+          View All Projects
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
         </motion.button>
       </div>
     </Element>

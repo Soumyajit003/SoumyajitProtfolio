@@ -7,7 +7,7 @@ const Hero = () => {
 
   return (
     <>
-      <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center overflow-hidden mt-5'>
+      <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center overflow-hidden mt-25'>
         {/* Left div */}
         <div className='w-full md:w-lg flex items-center text-center md:text-left'>
           <motion.div

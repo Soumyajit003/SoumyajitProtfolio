@@ -1,129 +1,180 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { assets } from "../../assets/assets";
 import ScrollReading from "./ScrollReading";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
+
 const Navbar = () => {
   const calculatedHeight = ScrollReading();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { to: "home", label: "Home" },
+    { to: "technologies", label: "Technologies" },
+    { to: "projects", label: "Projects" },
+    { to: "contact", label: "Contact" }
+  ];
 
   return (
     <>
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 100, 
-          damping: 20,
-          duration: 1, 
-          delay: 0.1 
-        }}
-        className="py-1 text-yellow-400 font-outfit sticky top-0 left-0 backdrop-blur-lg z-10"
+      <nav
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 font-outfit px-4 md:px-0 mt-0 md:mt-2`}
       >
-        <div className="flex justify-between md:mx-25 px-5 ">
+        <div
+          className={`mx-auto transition-all duration-500 flex justify-between items-center ${scrolled
+              ? "max-w-4xl bg-zinc-900/80 backdrop-blur-xl border border-white/10 py-3 px-8 rounded-full shadow-2xl mt-4"
+              : "max-w-7xl bg-transparent py-6 px-5"
+            }`}
+        >
+          {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex items-center"
           >
             <img
               src={assets.soumyajit_logo_light}
-              alt=""
-              className="md:w-10 w-8 ml-10 my-4 cursor-pointer"
+              alt="Logo"
+              className="w-10 h-10 cursor-pointer hover:rotate-12 transition-transform duration-300"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setIsMenuOpen(false);
+              }}
             />
           </motion.div>
-          <motion.ul 
-            variants={{
-              visible: { 
-                transition: { 
-                  staggerChildren: 0.1,
-                  delayChildren: 0.4
-                } 
-              }
-            }}
-            initial="hidden"
-            animate="visible"
-            className="hidden md:flex justify-around items-center w-lg font-semibold relative"
-          >
-            {[
-              { to: "home", label: "Home" },
-              { to: "technologies", label: "Technologies" },
-              { to: "projects", label: "Projects" },
-              { to: "contact", label: "Contact" }
-            ].map((item) => (
-              <motion.li 
+
+          {/* Desktop Links */}
+          <ul className="hidden md:flex items-center gap-10">
+            {navItems.map((item) => (
+              <motion.li
                 key={item.to}
-                variants={{
-                  hidden: { opacity: 0, y: -10 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                whileHover={{ scale: 1.1, color: "#fff" }}
-                className="cursor-pointer transition ease-linear duration-100"
+                whileHover={{ y: -2 }}
+                className="relative group flex flex-col items-center"
               >
                 <Link
                   to={item.to}
                   smooth={true}
                   duration={500}
-                  className="cursor-pointer"
+                  className="text-yellow-400 font-medium tracking-wide text-sm hover:text-white transition-colors cursor-pointer"
                 >
                   {item.label}
                 </Link>
+                {/* Active/Hover Indicator */}
+                <motion.div
+                  className="w-1 h-1 bg-yellow-400 rounded-full mt-1 scale-0 group-hover:scale-100 transition-transform duration-300"
+                />
               </motion.li>
             ))}
-          </motion.ul>
+          </ul>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center ">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {/* Mobile Toggle Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="text-yellow-400 p-2 hover:bg-white/5 rounded-full transition-colors"
+            >
+              <Menu size={28} />
             </button>
           </div>
+
+          {/* Integrated Progress Bar (for Desktop Pill) */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: calculatedHeight / 100 }}
+            style={{ originX: 0 }}
+            className={`absolute bottom-0 left-[10%] right-[10%] h-[1px] bg-yellow-400/50 transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`}
+          />
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <motion.ul
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="md:hidden flex flex-col items-center bg-opacity-80 py-5 space-y-4 text-white text-lg backdrop-blur-lg z-10 overflow-hidden"
-          >
-            {[
-              { to: "home", label: "Home" },
-              { to: "technologies", label: "Technologies" },
-              { to: "projects", label: "Projects" },
-              { to: "contact", label: "Contact" },
-              { to: "connect", label: "Connect With Me" }
-            ].map((item) => (
-              <motion.li 
-                key={item.to}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100"
-              >
-                <Link
-                  to={item.to}
-                  smooth={true}
-                  duration={500}
-                  className="cursor-pointer"
-                >
-                  {item.label}
-                </Link>
-              </motion.li>
-            ))}
-          </motion.ul>
+        {/* Floating Progress Bar (Global for transparent state) */}
+        {!scrolled && (
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: calculatedHeight / 100 }}
+            style={{ originX: 0 }}
+            className="absolute top-0 left-0 right-0 h-[3px] bg-yellow-400 z-[110]"
+          />
         )}
+      </nav>
 
-        <motion.span
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: calculatedHeight / 100 }}
-          style={{ originX: 0 }}
-          className="absolute bg-yellow-400 h-0.5 w-full bottom-0"
-        ></motion.span>
-      </motion.div>
+      {/* Modern Mobile Drawer */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 200 }}
+            className="fixed inset-0 bg-zinc-950/98 backdrop-blur-3xl z-[200] md:hidden flex flex-col p-8 overflow-y-auto"
+          >
+            <div className="flex justify-between items-center mb-12">
+              <img
+                src={assets.soumyajit_logo_light}
+                alt="Logo"
+                className="w-10 h-10 cursor-pointer"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setIsMenuOpen(false);
+                }}
+              />
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="text-zinc-400 hover:text-white transition-colors p-2"
+              >
+                <X size={32} />
+              </button>
+            </div>
+
+            <motion.ul
+              variants={{
+                show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
+              }}
+              initial="hidden"
+              animate="show"
+              className="flex flex-col gap-6"
+            >
+              {[...navItems, { to: "connect", label: "Connect" }].map((item) => (
+                <motion.li
+                  key={item.to}
+                  variants={{
+                    hidden: { opacity: 0, x: 20 },
+                    show: { opacity: 1, x: 0 }
+                  }}
+                >
+                  <Link
+                    to={item.to}
+                    smooth={true}
+                    duration={500}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-4xl font-outfit font-bold text-zinc-400 hover:text-yellow-400 transition-colors uppercase tracking-widest cursor-pointer block"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.li>
+              ))}
+            </motion.ul>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+              className="mt-auto pt-10 border-t border-white/5"
+            >
+              <p className="text-zinc-600 text-[10px] tracking-[0.2em] uppercase">© 2025 Soumyajit Bera</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

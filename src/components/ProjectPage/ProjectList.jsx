@@ -1,7 +1,69 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { myProjects } from '../../assets/assets';
 import { useState, useEffect } from 'react';
 
+const ImageSlider = ({ images, name }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (!images || images.length === 0) return null;
+
+  const nextImage = (e) => {
+    if (e) e.preventDefault();
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e) => {
+    if (e) e.preventDefault();
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <div className="relative group/slider w-full overflow-hidden rounded-xl border border-zinc-700/50 bg-zinc-900 shadow-2xl">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={currentIndex}
+          src={images[currentIndex]}
+          alt={`${name} screenshot ${currentIndex + 1}`}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="w-full h-auto object-cover"
+        />
+      </AnimatePresence>
+
+      {/* Navigation Controls */}
+      {images.length > 1 && (
+        <>
+          <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
+            <button
+              onClick={prevImage}
+              className="p-2 rounded-full bg-black/60 text-white hover:bg-yellow-400 hover:text-zinc-900 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <button
+              onClick={nextImage}
+              className="p-2 rounded-full bg-black/60 text-white hover:bg-yellow-400 hover:text-zinc-900 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+          </div>
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {images.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? "w-6 bg-yellow-400" : "w-1.5 bg-white/30"
+                  }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -16,48 +78,118 @@ const ProjectList = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      {projects.length > 0 && (
-        <motion.div
-          variants={{
-            visible: { transition: { staggerChildren: 0.1 } }
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.05 }}
-          className="flex flex-wrap justify-center"
-        >
-          {projects.map((project, index) => (
-            <motion.div
+    <div className="min-h-screen bg-transparent pb-20">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        {projects.map((project, index) => {
+          const isEven = index % 2 === 0;
+          return (
+            <motion.section
               key={index}
-              variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.9 },
-                visible: { opacity: 1, y: 0, scale: 1 }
-              }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              className="border-yellow-400 border md:w-xs w-xs m-10 text-center rounded md:pb-3 text-white/50 hover:bg-yellow-400 hover:text-zinc-800 transition-colors duration-300 z-0 flex md:flex-col justify-between group"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-10 md:gap-20 py-20 border-b border-zinc-800 last:border-none`}
             >
-              <div className="relative md:mb-3">
-                <img src={project.images} alt={project.name} className="md:w-xs w-40" />
-                <div className="absolute inset-0 bg-black/70 backdrop-blur-xs bg-opacity-75 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-sm p-2">A project about {project.name}.</p>
-                </div>
-              </div>
-              <div className="md:mr-0 mr-2 md:ml-0 ml-1">
-                <p className="font-bebas md:text-6xl text-4xl">{project.name}</p>
-                <ul>
-                  {project.technologyuse.map((tech, techIndex) => (
-                    <li key={techIndex} className="mx-1 inline-block list-disc md:text-sm text-[13px]">
+              {/* Project Image Slider */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, x: isEven ? -50 : 50 },
+                  visible: { opacity: 1, x: 0 }
+                }}
+                transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                className="w-full md:w-1/2 relative group"
+              >
+                <ImageSlider images={project.images} name={project.name} />
+
+                {/* Subtle glow effect */}
+                <div className="absolute -inset-4 bg-yellow-400/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+              </motion.div>
+
+              {/* Project Details */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, x: isEven ? 50 : -50 },
+                  visible: { opacity: 1, x: 0 }
+                }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, staggerChildren: 0.1 }}
+                className="w-full md:w-1/2 flex flex-col items-start"
+              >
+                <motion.h2
+                  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                  className="font-bebas text-5xl md:text-7xl text-white mb-4"
+                >
+                  {project.name}
+                </motion.h2>
+
+                <motion.p
+                  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                  className="font-outfit text-zinc-400 text-lg leading-relaxed mb-6"
+                >
+                  {project.description}
+                </motion.p>
+
+                {/* Key Features */}
+                <motion.div
+                  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                  className="mb-8"
+                >
+                  <h4 className="text-white font-bold mb-3 font-outfit uppercase tracking-wider text-sm opacity-60">Key Features</h4>
+                  <ul className="grid grid-cols-1 gap-2">
+                    {project.features?.map((feature, fIdx) => (
+                      <li key={fIdx} className="flex items-center gap-2 text-zinc-300 font-outfit">
+                        <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                {/* Tech Stack */}
+                <motion.div
+                  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                  className="flex flex-wrap gap-2 mb-8"
+                >
+                  {project.technologyuse.map((tech, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="px-3 py-1 bg-white/5 border border-zinc-700 text-yellow-400 rounded-full text-xs font-medium"
+                    >
                       {tech}
-                    </li>
+                    </span>
                   ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
+                </motion.div>
+
+                {/* Action Buttons */}
+                <motion.div
+                  variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}
+                  className="flex flex-wrap gap-4"
+                >
+                  <motion.a
+                    href={project.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-yellow-400 px-6 py-2.5 text-zinc-900 rounded font-bold font-outfit flex items-center gap-2 transition-colors hover:bg-white"
+                  >
+                    Live Demo
+                  </motion.a>
+                  <motion.a
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-6 py-2.5 border border-zinc-700 text-white rounded font-bold font-outfit hover:bg-white/5 transition-colors"
+                  >
+                    GitHub
+                  </motion.a>
+                </motion.div>
+              </motion.div>
+            </motion.section>
+          );
+        })}
+      </div>
     </div>
   );
 };

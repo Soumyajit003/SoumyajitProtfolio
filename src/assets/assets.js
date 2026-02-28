@@ -21,9 +21,15 @@ import git from './git.png'
 import github from './github.png'
 import aws from './aws.png'
 import resume from './SoumyajitBeraResume.pdf'
+import todoimg1 from './todo.png'
+import lurniximg1 from './lurniximg1.png'
+import lurniximg2 from './lurniximg2.png'
+import lurniximg3 from './lurniximg3.png'
+import foodimg1 from './eatnowimg1.png'
+import foodimg2 from './eatnowimg2.png'
 
 
-export const assets  = {
+export const assets = {
     soumyajit_logo_light,
     my_photo_1,
     my_photo_2,
@@ -46,25 +52,59 @@ export const assets  = {
     aws,
     c,
     dummy,
-    resume
+    resume,
+    todoimg1,
+    lurniximg1,
+    lurniximg2,
+    lurniximg3,
+    foodimg1,
+    foodimg2,
 }
 
 
 
 export const myProjects = [
     {
-        name:"Todo App",
-        technologyuse:['HTML','CSS','Javascript'],
-        images:`${dummy}`
+        name: "Lurinx-Learn online",
+        technologyuse: ['React', 'Tailwind', 'Node', 'Mongo'],
+        images: [lurniximg1, lurniximg2, lurniximg3],
+        description: "A full-stack, enterprise-grade Learning Management System built with secure authentication, role-based access control, community discussions, and AI integration to enhance the learning experience.",
+        features: [
+            "Secure OAuth Authentication & Role-Based Access Control",
+            "Dynamic Course & Progress Management System",
+            "Community Discussion Platform",
+            "AI-Powered Architecture (Gemini Integration Ready)",
+            "Scalable REST API & Modular Backend Design"
+        ],
+        liveLink: "https://lurnix-lms-frontend.vercel.app/",
+        githubLink: "https://github.com/Soumyajit003/Lurnix_LMS.git"
     },
     {
-        name:"Food Ordering",
-        technologyuse:['React','CSS','Node','Mongo'],
-        images:`${dummy}`
+        name: "Food Ordering",
+        technologyuse: ['React', 'CSS', 'Node', 'Mongo'],
+        images: [foodimg1, foodimg2],
+        description: "A full-stack marketplace for gourmet dining, featuring dynamic menus and secure checkout flows.",
+        features: [
+            "Interactive cart management",
+            "Live order status tracking",
+            "JWT-based user authentication",
+            "Integrated payment gateway mockup"
+        ],
+        liveLink: "https://github.com/Soumyajit003/Eatnow-online-food-ordering.git",
+        githubLink: "https://github.com/Soumyajit003/Eatnow-online-food-ordering.git"
     },
     {
-        name:"LMS website",
-        technologyuse:['React','Tailwind','Node','Mongo'],
-        images:`${dummy}`
+        name: "Todo App",
+        technologyuse: ['HTML', 'CSS', 'Javascript'],
+        images: [todoimg1],
+        description: "A comprehensive task management solution designed for peak productivity and seamless organization.",
+        features: [
+            "Real-time task synchronization",
+            "Priority-based sorting logic",
+            "Mobile-responsive dashboard",
+            "Local storage persistence"
+        ],
+        liveLink: "https://github.com/Soumyajit003/Todo-Basic.git",
+        githubLink: "https://github.com/Soumyajit003/Todo-Basic.git"
     },
 ]
