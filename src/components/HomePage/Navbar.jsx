@@ -32,7 +32,7 @@ const Navbar = () => {
       >
         <div
           className={`mx-auto transition-all duration-500 flex justify-between items-center ${scrolled
-              ? "max-w-4xl bg-zinc-900/80 backdrop-blur-xl border border-white/10 py-3 px-8 rounded-full shadow-2xl mt-4"
+              ? "max-w-5xl bg-zinc-900/80 backdrop-blur-xl border border-white/10 py-3 px-8 rounded-full shadow-2xl mt-4"
               : "max-w-7xl bg-transparent py-6 px-5"
             }`}
         >
