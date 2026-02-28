@@ -7,40 +7,71 @@ const Hero = () => {
 
   return (
     <>
-    <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center'>
+      <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center overflow-hidden mt-5'>
         {/* Left div */}
         <div className='w-full md:w-lg flex items-center text-center md:text-left'>
-          <div>
-            <motion.p className='text-4xl md:text-5xl font-extrabold mb-6 md:mb-10 text-white' 
-              whileInView={{ opacity: 1, x: 0 }}
-              initial={{ x: -100, opacity: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}>
+          <motion.div
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } }
+            }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+          >
+            <motion.p className='text-4xl md:text-5xl font-extrabold mb-6 md:mb-10 text-white'
+              variants={{
+                hidden: { x: -50, opacity: 0 },
+                visible: { x: 0, opacity: 1 }
+              }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}>
               Hello I am <span className='text-5xl md:text-7xl text-yellow-400'>Soumyajit</span>
             </motion.p>
             <motion.p
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              variants={{
+                hidden: { x: -50, opacity: 0 },
+                visible: { x: 0, opacity: 1 }
+              }}
+              transition={{ type: "spring", stiffness: 100, damping: 25 }}
               className='text-sm md:text-base px-4 md:px-0'>
-                 I am a passionate Full-Stack Web Developer. I specialize in building modern, scalable, and user-friendly web applications using the latest technologies. From intuitive front-end designs to robust back-end architectures, I craft seamless digital experiences. Let's create something amazing together!
+              I am a passionate Full-Stack Web Developer. I specialize in building modern, scalable, and user-friendly web applications using the latest technologies. From intuitive front-end designs to robust back-end architectures, I craft seamless digital experiences. Let's create something amazing together!
             </motion.p>
             <motion.button
-              initial={{ x: -100, opacity: 0 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              onClick={()=>(location.href=(assets.resume))}
-              className='bg-yellow-400 px-4 py-2 text-zinc-800 border-none rounded mt-6 md:mt-10  font-semibold outline-none cursor-pointer hover:bg-white transition ease-out duration-200 '>
+              variants={{
+                hidden: { x: -50, opacity: 0 },
+                visible: { x: 0, opacity: 1 }
+              }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
+              whileHover={{ scale: 1.05, backgroundColor: "#fff" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => (location.href = (assets.resume))}
+              className='bg-yellow-400 px-4 py-2 text-zinc-800 border-none rounded mt-6 md:mt-10  font-semibold outline-none cursor-pointer transition ease-out duration-200 '>
               Resume
             </motion.button>
-          </div>
+          </motion.div>
         </div>
         {/* Right div */}
         <motion.div
-          initial={{ x: 100, opacity: 0 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          initial={{ x: 100, opacity: 0, scale: 0.8 }}
+          whileInView={{ x: 0, opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{
+            type: "spring",
+            stiffness: 80,
+            damping: 15,
+            delay: 0.4
+          }}
           className='w-full md:w-lg flex justify-center mt-8 md:mt-0'>  {/*md:justify-end*/}
-          <img src={assets.my_photo_3} alt='' className='w-60 md:w-md rounded-lg'/>
+          <motion.img
+            // animate={{
+            //   y: [0, -15, 0],
+            //   rotate: [0, 1, 0, -1, 0]
+            // }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            src={assets.my_photo_3} alt='' className='w-60 md:w-md rounded-lg' />
         </motion.div>
       </Element>
     </>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Home from '../components/HomePage/Hero'
 import Navbar from '../components/HomePage/Navbar'
 import Hero from '../components/HomePage/Hero'
+import Experience from '../components/HomePage/Experience'
 import Technology from '../components/HomePage/Technology'
 import Projects from '../components/HomePage/Projects'
 import FollowCursor from '../components/HomePage/FollowCursor'
@@ -15,15 +16,16 @@ const HomeMain = () => {
 
   return (
     <div>
-      <Navbar/>
-      <Hero/>
-      <Technology/>
-      <Projects/>
-      <FollowCursor/>
-      <Contact/>
-      <Social/>
-      <Footer/>
-      <Floating/>
+      <Navbar />
+      <Hero />
+      <Experience />
+      <Technology />
+      <Projects />
+      <FollowCursor />
+      <Contact />
+      <Social />
+      <Footer />
+      <Floating />
     </div>
   )
 }

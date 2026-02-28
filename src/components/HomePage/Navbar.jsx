@@ -13,59 +13,66 @@ const Navbar = () => {
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, delay: 0.2 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 100, 
+          damping: 20,
+          duration: 1, 
+          delay: 0.1 
+        }}
         className="py-1 text-yellow-400 font-outfit sticky top-0 left-0 backdrop-blur-lg z-10"
       >
         <div className="flex justify-between md:mx-25 px-5 ">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
             <img
               src={assets.soumyajit_logo_light}
               alt=""
               className="md:w-10 w-8 ml-10 my-4 cursor-pointer"
             />
-          </div>
-          <ul className="hidden md:flex justify-around items-center w-lg font-semibold relative">
-            <li className="hover:text-white cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="home"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
+          </motion.div>
+          <motion.ul 
+            variants={{
+              visible: { 
+                transition: { 
+                  staggerChildren: 0.1,
+                  delayChildren: 0.4
+                } 
+              }
+            }}
+            initial="hidden"
+            animate="visible"
+            className="hidden md:flex justify-around items-center w-lg font-semibold relative"
+          >
+            {[
+              { to: "home", label: "Home" },
+              { to: "technologies", label: "Technologies" },
+              { to: "projects", label: "Projects" },
+              { to: "contact", label: "Contact" }
+            ].map((item) => (
+              <motion.li 
+                key={item.to}
+                variants={{
+                  hidden: { opacity: 0, y: -10 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ scale: 1.1, color: "#fff" }}
+                className="cursor-pointer transition ease-linear duration-100"
               >
-                Home
-              </Link>
-            </li>
-            <li className="hover:text-white cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="technologies"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Technologies
-              </Link>
-            </li>
-            <li className="hover:text-white cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="projects"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Projects
-              </Link>
-            </li>
-            <li className="hover:text-white cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="contact"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
+                <Link
+                  to={item.to}
+                  smooth={true}
+                  duration={500}
+                  className="cursor-pointer"
+                >
+                  {item.label}
+                </Link>
+              </motion.li>
+            ))}
+          </motion.ul>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center ">
@@ -78,68 +85,44 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <motion.ul
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden flex flex-col items-center bg-opacity-80 py-5 space-y-4 text-white text-lg backdrop-blur-lg z-10"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="md:hidden flex flex-col items-center bg-opacity-80 py-5 space-y-4 text-white text-lg backdrop-blur-lg z-10 overflow-hidden"
           >
-            <li className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="home"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
+            {[
+              { to: "home", label: "Home" },
+              { to: "technologies", label: "Technologies" },
+              { to: "projects", label: "Projects" },
+              { to: "contact", label: "Contact" },
+              { to: "connect", label: "Connect With Me" }
+            ].map((item) => (
+              <motion.li 
+                key={item.to}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100"
               >
-                Home
-              </Link>
-            </li>
-            <li className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="technologies"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Technologies
-              </Link>
-            </li>
-            <li className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="projects"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Projects
-              </Link>
-            </li>
-            <li  className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100">
-            <Link
-              to="contact"
-              smooth={true}
-              duration={500}
-              className="cursor-pointer"
-            >
-              Contact
-            </Link>
-            </li>
-            <li className="hover:text-yellow-400 cursor-pointer transition ease-linear duration-100">
-              <Link
-                to="connect"
-                smooth={true}
-                duration={500}
-                className="cursor-pointer"
-              >
-                Connect With Me
-              </Link>
-            </li>
+                <Link
+                  to={item.to}
+                  smooth={true}
+                  duration={500}
+                  className="cursor-pointer"
+                >
+                  {item.label}
+                </Link>
+              </motion.li>
+            ))}
           </motion.ul>
         )}
 
-        <span
-          style={{ transform: `translateX(${calculatedHeight - 100}%)` }}
+        <motion.span
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: calculatedHeight / 100 }}
+          style={{ originX: 0 }}
           className="absolute bg-yellow-400 h-0.5 w-full bottom-0"
-        ></span>
+        ></motion.span>
       </motion.div>
     </>
   );

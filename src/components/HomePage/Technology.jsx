@@ -7,172 +7,100 @@ const Technology = () => {
   return (
     <Element className="md:mx-25 mx-10 border-b border-b-zinc-600 cursor-default" name="technologies">
       <motion.p
-        whileInView={{ opacity: 1, y: 0}}
-        initial={{ opacity: 0, y: 100}}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20 }}
         className=" text-white text-3xl m-auto md:text-center mt-10 font-outfit"
       >
         Technologies
       </motion.p>
       <div className=" grid auto-cols-fr my-15">
-        {/* Frontend */}
-        <div className="md:flex justify-around mb-10">
+        {[
+          {
+            title: "Frontend",
+            items: [
+              { name: "HTML", icon: assets.html },
+              { name: "CSS", icon: assets.css },
+              { name: "React", icon: assets.reactpng },
+              { name: "Tailwind", icon: assets.tailwind },
+              { name: "Javascript", icon: assets.js },
+              { name: "Typescript", icon: assets.typescript },
+              { name: "Frammer", icon: assets.frammer }
+            ]
+          },
+          {
+            title: "Backend",
+            items: [
+              { name: "Node.Js", icon: assets.node },
+              { name: "Express.Js", icon: assets.express }
+            ]
+          },
+          {
+            title: "Database",
+            items: [
+              { name: "MongoDB", icon: assets.mongo },
+              { name: "MySQL", icon: assets.mysql }
+            ]
+          },
+          {
+            title: "Languages",
+            items: [
+              { name: "Java", icon: assets.java },
+              { name: "C++", icon: assets.cpp },
+              { name: "C", icon: assets.c }
+            ]
+          },
+          {
+            title: "Tools",
+            items: [
+              { name: "Git", icon: assets.git },
+              { name: "Github", icon: assets.github },
+              { name: "AWS", icon: assets.aws }
+            ]
+          }
+        ].map((section, idx) => (
           <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" md:w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
+            key={section.title}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.1 }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } }
+            }}
+            className={`md:flex justify-around ${idx !== 0 ? 'my-10' : 'mb-10'}`}
           >
-            <p className="">Frontend</p>
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: -30 },
+                visible: { opacity: 1, x: 0 }
+              }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
+              className=" md:w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
+            >
+              <p>{section.title}</p>
+            </motion.div>
+            <motion.div
+              className="md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
+            >
+              {section.items.map((item) => (
+                <motion.div
+                  key={item.name}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { opacity: 1, scale: 1 }
+                  }}
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="flex items-center gap-3 md:w-10 w-7"
+                >
+                  <img src={item.icon} alt="" className="" />
+                  <p className=" text-white font-josefin md:text-xl whitespace-nowrap">{item.name}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className="md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
-          >
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.html} alt="" className="" />
-              <p className=" text-white font-josefin md:text-xl">HTML</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.css} alt="" />
-              <p className=" text-white font-josefin md:text-xl">CSS</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.reactpng} alt="" />
-              <p className=" text-white font-josefin md:text-xl">React</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.tailwind} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Tailwind</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.js} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Javascript</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.typescript} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Typescript</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.frammer} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Frammer</p>
-            </div>
-          </motion.div>
-        </div>
-        {/* Backend */}
-        <div className="md:flex justify-around my-10">
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
-          >
-            <p>Backend</p>
-          </motion.div>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
-          >
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.node} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Node.Js</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.express} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Express.Js</p>
-            </div>
-          </motion.div>
-        </div>
-        {/* Database */}
-        <div className="md:flex justify-around my-10">
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className="w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
-          >
-            <p>Database</p>
-          </motion.div>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
-          >
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.mongo} alt="" />
-              <p className=" text-white font-josefin md:text-xl">MongoDB</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.mysql} alt="" />
-              <p className=" text-white font-josefin md:text-xl">MySQL</p>
-            </div>
-          </motion.div>
-        </div>
-        {/* Languages */}
-        <div className="md:flex justify-around my-10">
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
-          >
-            <p>Languages</p>
-          </motion.div>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
-          >
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.java} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Java</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.cpp} alt="" />
-              <p className=" text-white font-josefin md:text-xl">C++</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.c} alt="" />
-              <p className=" text-white font-josefin md:text-xl">C</p>
-            </div>
-          </motion.div>
-        </div>
-        {/* Tools */}
-        <div className="md:flex justify-around my-10">
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className="w-xs font-bebas text-5xl text-white font-bold md:mb-0 mb-7"
-          >
-            <p>Tools</p>
-          </motion.div>
-          <motion.div
-            whileInView={{ opacity: 1, y: 0 }}
-            initial={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.5 }}
-            className=" md:w-lg md:grid md:grid-cols-3 gap-3 grid grid-cols-2"
-          >
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.git} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Git</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.github} alt="" />
-              <p className=" text-white font-josefin md:text-xl">Github</p>
-            </div>
-            <div className="flex items-center gap-3 md:w-10 w-7">
-              <img src={assets.aws} alt="" />
-              <p className=" text-white font-josefin md:text-xl">AWS</p>
-            </div>
-          </motion.div>
-        </div>
+        ))}
       </div>
     </Element>
   );
