@@ -1,26 +1,40 @@
-import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
-import { motion } from 'motion/react'
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react'
 import { Element } from "react-scroll";
 
 const Contact = () => {
   const form = useRef();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
-  const sendEmail = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    emailjs
-      .sendForm('service_l42z7jb', 'template_2tig7bl', form.current, {
-        publicKey: 'jEZkhixSA8_AR84En',
-      })
-      .then(
-        () => {
-          console.log('SUCCESS!');
-        },
-        (error) => {
-          console.log('FAILED...', error.text);
-        },
-      );
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxC-UqMlPMbzOpA1NDk6wDzV1Bke4denEeuhONvqK-k_F4yzl61oJ-uAlZvldcdyO4Q/exec'; // User will replace this
+
+    try {
+      const response = await fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form.current),
+      });
+
+      if (response.ok) {
+        setIsSubmitting(false);
+        setShowPopup(true);
+        form.current.reset();
+        // Hide popup after 5 seconds
+        setTimeout(() => setShowPopup(false), 5000);
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('Error!', error.message);
+      setIsSubmitting(false);
+      setSubmitStatus('error');
+    }
   };
 
   return (
@@ -112,7 +126,7 @@ const Contact = () => {
         >
           <div className="absolute -inset-1 bg-yellow-400/5 blur-3xl rounded-full -z-10" />
 
-          <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-5">
+          <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label className="text-zinc-500 text-xs font-outfit uppercase tracking-widest ml-1">Your Name</label>
               <motion.input
@@ -144,15 +158,54 @@ const Contact = () => {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.02, backgroundColor: "#fff" }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: isSubmitting ? 1 : 1.02, backgroundColor: isSubmitting ? "#facc15" : "#fff" }}
+              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
               type="submit"
-              className="bg-yellow-400 text-zinc-900 font-bold py-4 rounded-xl mt-4 font-outfit shadow-lg shadow-yellow-400/10 transition-all duration-300 flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className={`bg-yellow-400 text-zinc-900 font-bold py-4 rounded-xl mt-4 font-outfit shadow-lg shadow-yellow-400/10 transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              Send Message
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
+              {isSubmitting ? (
+                <>
+                  <span className="animate-spin rounded-full h-4 w-4 border-2 border-zinc-900 border-t-transparent" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
+                </>
+              )}
             </motion.button>
+            {submitStatus === 'error' && (
+              <p className="text-red-500 text-sm font-outfit text-center mt-2">Failed to send. Please try again or email me directly.</p>
+            )}
           </form>
+
+          {/* Confirmation Popup */}
+          <AnimatePresence>
+            {showPopup && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="fixed bottom-10 right-10 z-50 bg-zinc-900 border border-yellow-400/30 p-6 rounded-2xl shadow-2xl max-w-sm flex items-start gap-4"
+              >
+                <div className="bg-yellow-400/10 p-2 rounded-lg text-yellow-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-white font-bebas text-xl tracking-wide">Message Sent!</h3>
+                  <p className="text-zinc-400 text-sm font-outfit mt-1">Thank you for reaching out. I'll get back to you soon!</p>
+                </div>
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="text-zinc-500 hover:text-white transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
       </div>

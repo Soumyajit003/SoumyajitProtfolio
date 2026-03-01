@@ -80,7 +80,7 @@ export const myProjects = [
         githubLink: "https://github.com/Soumyajit003/Lurnix_LMS.git"
     },
     {
-        name: "Eatnow - order online",
+        name: "Eatnow - order food online",
         technologyuse: ['React', 'CSS', 'Node', 'Mongo'],
         images: [foodimg1, foodimg2],
         description: "A full-stack marketplace for gourmet dining, featuring dynamic menus and secure checkout flows.",
