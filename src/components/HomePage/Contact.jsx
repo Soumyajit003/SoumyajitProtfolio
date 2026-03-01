@@ -13,7 +13,7 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxC-UqMlPMbzOpA1NDk6wDzV1Bke4denEeuhONvqK-k_F4yzl61oJ-uAlZvldcdyO4Q/exec'; // User will replace this
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxU-hpLMnL5AieAnuvjZoDv_VahG1q3MLvVoFyYQRRVJFnaGi7A0IA1Xlw1jgAsV9rx/exec'; // User will replace this
 
     try {
       const response = await fetch(scriptURL, {
