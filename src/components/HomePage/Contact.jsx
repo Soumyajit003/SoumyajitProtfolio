@@ -88,7 +88,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-zinc-500 text-sm font-outfit uppercase tracking-wider">Location</p>
-                <p className="text-white font-medium font-outfit">West Bengal, India</p>
+                <p className="text-white font-medium font-outfit">Kolkata, India</p>
               </div>
             </motion.div>
           </div>
