@@ -5,14 +5,15 @@ const Floating = () => {
   return (
     <>
       <div className=" text-yellow-400 fixed bottom-40 -left-15 texto rotate-90 md:block hidden">
-        <motion.p
+        <motion.a
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
           className=" cursor-default"
+          href="mailto:[soumya.bera003@gmail.com]"
         >
           soumya.bera003@gmail.com
-        </motion.p>
+        </motion.a>
       </div>
       <div className=" text-yellow-400 fixed top-40 right-0 texto rotate-90 md:block hidden">
         <motion.div
