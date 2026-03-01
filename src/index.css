@@ -10,6 +10,11 @@
   --font-outfit: Outfit, "sans-serif";
 }
 
+::selection {
+  color: rgb(41, 41, 41);
+  background: #ffcc00;
+}
+
 
 ::-webkit-scrollbar{
   display: none;
