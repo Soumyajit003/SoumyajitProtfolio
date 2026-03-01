@@ -65,7 +65,7 @@ export const assets = {
 
 export const myProjects = [
     {
-        name: "Lurinx-Learn online",
+        name: "Lurinx - Learn online",
         technologyuse: ['React', 'Tailwind', 'Node', 'Mongo'],
         images: [lurniximg1, lurniximg2, lurniximg3],
         description: "A full-stack, enterprise-grade Learning Management System built with secure authentication, role-based access control, community discussions, and AI integration to enhance the learning experience.",
@@ -80,7 +80,7 @@ export const myProjects = [
         githubLink: "https://github.com/Soumyajit003/Lurnix_LMS.git"
     },
     {
-        name: "Food Ordering",
+        name: "Eatnow - order online",
         technologyuse: ['React', 'CSS', 'Node', 'Mongo'],
         images: [foodimg1, foodimg2],
         description: "A full-stack marketplace for gourmet dining, featuring dynamic menus and secure checkout flows.",
