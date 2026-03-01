@@ -43,8 +43,23 @@ const FollowCursor = ({ color = '#cca300' }) => {
       cursor.y = e.clientY;
     };
     const onWindowResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      // If resizing below laptop width, destroy the effect
+      if (newWidth < 1024 && canvas) {
+        destroy();
+        return;
+      }
+
+      // If resizing above laptop width and it's not already initialized, init it
+      if (newWidth >= 1024 && !canvas) {
+        init();
+        return;
+      }
+
+      width = newWidth;
+      height = newHeight;
       if (canvas) {
         canvas.width = width;
         canvas.height = height;
@@ -61,6 +76,12 @@ const FollowCursor = ({ color = '#cca300' }) => {
       animationFrame = requestAnimationFrame(loop);
     };
     const init = () => {
+      // Laptop/Desktop check (usually >1024px)
+      if (window.innerWidth < 1024) {
+        console.log('Mobile/Tablet detected, cursor effect skipped.');
+        return;
+      }
+
       if (prefersReducedMotion.matches) {
         console.log('Reduced motion enabled, cursor effect skipped.');
         return;

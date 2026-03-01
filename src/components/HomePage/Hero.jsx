@@ -7,7 +7,7 @@ const Hero = () => {
 
   return (
     <>
-      <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center overflow-hidden mt-25'>
+      <Element name='home' className='flex cursor-default flex-col md:flex-row justify-around text-white font-outfit mx-5 md:mx-25 border-b border-b-zinc-600 items-center overflow-hidden md:mt-25 mt-40'>
         {/* Left div */}
         <div className='w-full md:w-lg flex items-center text-center md:text-left'>
           <motion.div
@@ -60,7 +60,7 @@ const Hero = () => {
             damping: 15,
             delay: 0.4
           }}
-          className='w-full md:w-lg flex justify-center mt-8 md:mt-0'>  {/*md:justify-end*/}
+          className='w-full md:w-lg flex justify-center mt-20 md:mt-0'>  {/*md:justify-end*/}
           <motion.img
             // animate={{
             //   y: [0, -15, 0],
