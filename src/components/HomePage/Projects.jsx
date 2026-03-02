@@ -39,7 +39,7 @@ const Projects = () => {
             }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
             whileHover={{ y: -10 }}
-            className="relative group w-full md:w-[350px] bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-300 hover:border-yellow-400/30"
+            className="relative group w-full md:w-[350px] bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-300 hover:border-yellow-400/30 "
           >
             {/* Project Image Container */}
             <div className="relative h-48 overflow-hidden">
@@ -91,7 +91,7 @@ const Projects = () => {
           whileHover={{ scale: 1.05, }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/projects')}
-          className="bg-yellow-400 px-8 py-3 text-zinc-800 rounded font-bold font-outfit flex items-center gap-2 mx-auto hover:bg-white transition-all duration-300"
+          className="bg-yellow-400 px-8 py-3 text-zinc-800 rounded-xl font-bold font-outfit flex items-center gap-2 mx-auto hover:bg-white transition-all duration-300 "
         >
           View All Projects
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>

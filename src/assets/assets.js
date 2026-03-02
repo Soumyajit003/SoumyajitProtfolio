@@ -25,9 +25,12 @@ import todoimg1 from './todo.png'
 import lurniximg1 from './lurniximg1.png'
 import lurniximg2 from './lurniximg2.png'
 import lurniximg3 from './lurniximg3.png'
+import lurniximg4 from './lurniximg4.png'
+import lurniximg5 from './lurniximg5.png'
 import foodimg1 from './eatnowimg1.png'
 import foodimg2 from './eatnowimg2.png'
 import foodimg3 from './eatnowimg3.png'
+import foodimg4 from './eatnowimg4.png'
 
 
 export const assets = {
@@ -65,10 +68,10 @@ export const assets = {
 
 
 export const myProjects = [
-    {
+    {   
         name: "Lurinx - Learn online",
         technologyuse: ['React', 'Tailwind', 'Node', 'Mongo', 'Clerk', 'Gemini API'],
-        images: [lurniximg1, lurniximg2, lurniximg3],
+        images: [lurniximg1, lurniximg2, lurniximg4, lurniximg5,lurniximg3],
         description: "A full-stack, enterprise-grade Learning Management System built with secure authentication, role-based access control, community discussions, and AI integration to enhance the learning experience.",
         features: [
             "Secure OAuth Authentication & Role-Based Access Control",
@@ -83,7 +86,7 @@ export const myProjects = [
     {
         name: "Eatnow - order food online",
         technologyuse: ['React', 'Tailwind', 'Node', 'Mongo'],
-        images: [foodimg1, foodimg2, foodimg3],
+        images: [foodimg1, foodimg2, foodimg3, foodimg4],
         description: "A full-stack marketplace for gourmet dining, featuring dynamic menus and secure checkout flows.",
         features: [
             "Interactive cart management",

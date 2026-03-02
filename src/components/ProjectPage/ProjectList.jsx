@@ -170,7 +170,7 @@ const ProjectList = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-yellow-400 px-6 py-2.5 text-zinc-900 rounded font-bold font-outfit flex items-center gap-2 transition-colors hover:bg-white"
+                    className="bg-yellow-400 px-6 py-2.5 text-zinc-900 rounded-xl font-bold font-outfit flex items-center gap-2 transition-colors hover:bg-white"
                   >
                     Live Demo
                   </motion.a>
@@ -180,7 +180,7 @@ const ProjectList = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-6 py-2.5 border border-zinc-700 text-white rounded font-bold font-outfit hover:bg-white/5 transition-colors"
+                    className="px-6 py-2.5 border border-zinc-700 text-white rounded-xl font-bold font-outfit hover:bg-white/5 transition-colors"
                   >
                     GitHub
                   </motion.a>

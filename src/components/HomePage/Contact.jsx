@@ -162,7 +162,7 @@ const Contact = () => {
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
               type="submit"
               disabled={isSubmitting}
-              className={`bg-yellow-400 text-zinc-900 font-bold py-4 rounded-xl mt-4 font-outfit shadow-lg shadow-yellow-400/10 transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`bg-yellow-400 text-zinc-900 font-bold py-4 rounded-xl mt-4 font-outfit transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               {isSubmitting ? (
                 <>

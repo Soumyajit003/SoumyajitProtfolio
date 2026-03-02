@@ -32,7 +32,7 @@ const Hero = () => {
                 visible: { x: 0, opacity: 1 }
               }}
               transition={{ type: "spring", stiffness: 100, damping: 25 }}
-              className='text-sm md:text-base px-4 md:px-0'>
+              className='text-sm md:text-base px-4 md:px-0 text-zinc-400'>
               I am a passionate Full-Stack Web Developer. I specialize in building modern, scalable, and user-friendly web applications using the latest technologies. From intuitive front-end designs to robust back-end architectures, I craft seamless digital experiences. Let's create something amazing together!
             </motion.p>
             <motion.button
@@ -44,7 +44,7 @@ const Hero = () => {
               whileHover={{ scale: 1.05, backgroundColor: "#fff" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => (location.href = (assets.resume))}
-              className='bg-yellow-400 px-4 py-2 text-zinc-800 border-none rounded mt-6 md:mt-10  font-semibold outline-none cursor-pointer transition ease-out duration-200 '>
+              className='bg-yellow-400 px-4 py-2 text-zinc-800 border-none rounded-xl mt-6 md:mt-10  font-semibold outline-none cursor-pointer transition ease-out duration-200 '>
               Resume
             </motion.button>
           </motion.div>
